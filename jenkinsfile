@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        lable 'WindowsNode'
+        label 'WindowsNode'
     }
 
     stages {

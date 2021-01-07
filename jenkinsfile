@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Git Clone') {
+            steps {
+                echo 'Cloning the repo..'
+                git branch: 'main', url: 'https://github.com/narendracubicit/simplehelloworldjava'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building the project.'
+                bat 'build.bat'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Executing test cases'
+                bat 'test.bat'
+            }
+        }
+         stage('Deploy') {
+            steps {
+                echo 'deploying the project. test cases'
+                bat 'deploy.bat'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'This will be execucted at any cost after the stages'
+        }
+        success {
+            echo 'Build is successful. So, send an email to manager.'
+        }
+        failure {
+            echo 'Build is Failure. So, send an email to manager.'
+        }
+        unstable {
+            echo 'Build is Unstable. So, send an email to manager.'
+        }
+        changed {
+            echo 'Build is Changed. So, send an email to manager.'
+        }
+    }
+}

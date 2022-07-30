@@ -10,8 +10,13 @@ pipeline {
         }
         stage('Build') {
             steps {
+            retry(2) {
                 echo 'Building the project.'
                 bat 'build.bat'
+            }
+            timeout(time: 10,unit: 'SECONDS') {
+            echo 'Wait for 10 SECONDS'
+            }
             }
         }
         stage('Test') {
